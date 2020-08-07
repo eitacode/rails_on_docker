@@ -1,18 +1,19 @@
 version: '3.0'
 services:
-  db:
-    image: postgres
-    volumes:
-      - ./tmp/db:/var/lib/postgresql/data
-    environment:
-      POSTGRES_PASSWORD: password
-  web:
+  app:
     build: .
     volumes:
       - .:/app
     ports:
       - "3000:3000"
     depends_on:
-      - db
+      - postgres
     environment:
       PG_PASSWORD: password
+
+  postgres:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
